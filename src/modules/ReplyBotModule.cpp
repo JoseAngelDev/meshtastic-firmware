@@ -138,7 +138,14 @@ ProcessMessage ReplyBotModule::handleReceived(const meshtastic_MeshPacket &mp)
 
     // Build the reply message and send it back via DM
     char reply[96];
-    snprintf(reply, sizeof(reply), "🎙️ Mic Check : %d Hops away | RSSI %d | SNR %.1f", hopsAway, rssi, snr);
+    const char *msgPtr = buf;
+    while (*msgPtr == ' ' || *msgPtr == '\t')
+        msgPtr++;
+    if (strncmp(msgPtr, "/ping", 5) == 0) {
+        snprintf(reply, sizeof(reply), "Pong : %d Hops away | RSSI %d | SNR %.1f", hopsAway, rssi, snr);
+    } else {
+        snprintf(reply, sizeof(reply), "🎙️ Mic Check : %d Hops away | RSSI %d | SNR %.1f", hopsAway, rssi, snr);
+    }
     sendDm(mp, reply);
     return ProcessMessage::CONTINUE;
 }
