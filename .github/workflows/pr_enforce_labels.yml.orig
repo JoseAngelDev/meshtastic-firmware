@@ -19,9 +19,6 @@ jobs:
             const labels = context.payload.pull_request.labels.map(label => label.name);
             const requiredLabels = ['bugfix', 'enhancement', 'hardware-support', 'dependencies', 'submodules', 'github_actions', 'trunk', 'cleanup'];
             const hasRequiredLabel = labels.some(label => requiredLabels.includes(label));
-            if (context.payload.pull_request.user.login === 'google-labs-jules[bot]') {
-              return;
-            }
             if (!hasRequiredLabel) {
               core.setFailed(`PR must have at least one of the following labels before it can be merged: ${requiredLabels.join(', ')}.`);
             }
