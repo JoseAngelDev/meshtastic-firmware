@@ -65,6 +65,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             if [[ "$ARCH" == "" ]]; then
               echo "## ❌ Error: Target "$BUILDTARGET" not found!" >> $GITHUB_STEP_SUMMARY
+              exit 1
             else
               echo "## ✅ Target "$BUILDTARGET" found, proceeding to build." >> $GITHUB_STEP_SUMMARY
             fi
